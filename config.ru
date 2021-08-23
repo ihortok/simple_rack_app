@@ -4,5 +4,6 @@ require 'pry'
 require_relative 'app'
 
 use NotFoundError
+use HomeRedirect  
 
 run App.new

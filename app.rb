@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-$routes = ['/', '/contacts', '/about']
+$routes = ['/', '/home', '/contacts', '/about']
 
 # NotFoundError Rack middleware
 class NotFoundError
@@ -13,6 +13,21 @@ class NotFoundError
       @app.call(env)
     else
       [404, { 'Contend-Type' => 'text/plain' }, ['Page Not Found']]
+    end
+  end
+end
+
+# Home Redirect Rack middleware
+class HomeRedirect
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    if env['PATH_INFO'] == '/home'
+      [301, { 'Location' => '/' }, []]
+    else
+      @app.call(env)
     end
   end
 end
